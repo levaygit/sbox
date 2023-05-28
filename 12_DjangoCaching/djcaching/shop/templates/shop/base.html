@@ -1,0 +1,58 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}
+
+  {% endblock %}</title>
+</head>
+<body>
+<header>
+    <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+    <input name="next" type="hidden" value="{{ redirect_to }}">
+    <select name="language">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% for language in languages %}
+            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                {{ language.name_local }} ({{ language.code }})
+            </option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Go">
+</form>
+    <div>
+        {% if user.is_authenticated %}
+        <div>
+            <h5>{% trans 'Your name is ' %}{{ user.username }}</h5>
+        </div>
+        <div>
+            <a href="{% url 'user_account:logout' %}">{% trans 'Logout' %}</a>
+            <a href="{% url 'user_account:about_me' pk=user.pk %}">{% trans 'Personal account' %}</a>
+            {% else %}
+            <a href="{% url 'user_account:register' %}">{% trans 'Register' %}</a>
+            <a href="{% url 'user_account:login' %}">{% trans 'Login' %}</a>
+            {% endif %}
+        </div>
+    </div>
+    {% block header %}
+
+    {% endblock %}
+</header>
+<hr size="1">
+<hr size="1">
+<hr size="1">
+{% block body %}
+
+{% endblock %}
+</body>
+<hr size="1">
+<hr size="1">
+<footer>
+{% block footer %}
+<a href="{% url 'shop:shops' %}">{% trans 'Shops' %}</a>
+{% endblock %}
+</footer>
+</html>

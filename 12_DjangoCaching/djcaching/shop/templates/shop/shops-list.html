@@ -1,0 +1,36 @@
+{% extends 'shop/base.html' %}
+{% load i18n %}
+{% load cache %}
+
+{% block title %}
+
+{% trans 'Shops list' %}
+
+{% endblock %}
+
+
+{% block header %}
+
+
+{% endblock %}
+
+
+
+{% block body %}
+{% cache 1 shops_list %}
+{% for shop in shops %}
+<div>
+    <p>{% trans 'Name' %} {{ shop.name }}</p>
+    <p>{% trans 'Address' %} {{ shop.address }}</p>
+    <p>{% trans 'Work time' %} {{ shop.opening }} - {{ shop.closing }}</p>
+    <hr>
+</div>
+{% endfor %}
+{% endcache %}
+
+
+{% endblock %}
+
+{% block footer %}
+<p><a href="{% url 'shop:products_list' %}">{% trans 'Products list' %}</a></p>
+{% endblock %}

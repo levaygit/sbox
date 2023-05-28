@@ -1,0 +1,26 @@
+{% extends 'shop/base.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% trans 'Products list' %}
+{% endblock %}
+
+{% block body %}
+  <h1>{% trans 'Products' %}:</h1>
+  {% if products %}
+    <div>
+    {% for product in products %}
+      <div>
+        <p>{% trans 'Name' %}: <a href="{% url 'shop:product_details' pk=product.pk %}"
+        >{{ product.name }}</a></p>
+        <p>{% trans 'Price' %}: {{ product.price }}</p>
+        <p>{% trans 'Discount' %}: {% firstof product.discount '-' %}</p>
+      </div>
+    {% endfor %}
+
+    </div>
+
+  {% else %}
+    <h3>{% trans 'No products yet' %}</h3>
+  {% endif %}
+{% endblock %}

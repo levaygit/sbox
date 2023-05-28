@@ -1,0 +1,22 @@
+{% extends 'shop/base.html' %}
+{% load i18n %}
+
+{% block title %}
+  {% trans 'Product' %} #{{ product.pk }}
+{% endblock %}
+
+{% block body %}
+  <h1>{% trans 'Product' %} <strong>{{ product.name }}</strong></h1>
+  <div>
+    <div>{% trans 'Description' %}: <em>{{ product.description }}</em></div>
+    <div>{% trans 'Price' %}: {{ product.price }}</div>
+    <div>{% trans 'Discount' %}: {{ product.discount }}</div>
+    <div>{% trans 'Archived' %}: {{ product.archived }}</div>
+  </div>
+{% endblock %}
+
+{% block footer %}
+  <div>
+    <a href="{% url 'shop:products_list' %}">{% trans 'Back to products list' %}</a>
+  </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'shop/base.html' %}
+{% load i18n %}
+
+{% block title %}
+  {% trans 'Order' %} #{{ order.pk }}
+{% endblock %}
+
+{% block body %}
+  <h1>{% trans 'Order' %} <strong>{{ order.user.username }}</strong></h1>
+  <div>
+    <p>{% trans 'Delivery address' %}: {{ order.delivery_address}}</p>
+    <p>{% trans 'Promocode' %}: {{ order.promocode}}</p>
+    <p>{% trans 'Created' %}: {{ order.created_at}}</p>
+  </div>
+{% if order.products %}
+{% for product in order.products.all %}
+<a href="{% url 'shop:product_details' pk=product.pk %}">{{ product.name }}</a>
+{% endfor %}
+{% else %}
+<p>{% trans "No products" %}</p>
+{% endif %}
+{% endblock %}
+
+{% block footer %}
+  <div>
+    <a href="{% url 'user_account:about_me' pk=user.pk %}">{% trans 'Back to personal account' %}</a>
+  </div>
+{% endblock %}

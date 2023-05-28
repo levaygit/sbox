@@ -1,0 +1,43 @@
+{% extends 'user_account/base.html' %}
+{% load i18n %}
+
+
+{% block title %}
+
+{% trans 'Register' %}
+
+{% endblock %}
+
+
+{% block body %}
+{% if not user.is_authenticated %}
+<div>
+  <h1>{% trans 'Register' %}</h1>
+</div>
+
+<div>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="{% trans 'Register' %}">
+  </form>
+</div>
+<div>
+  <p><a href="{% url 'user_account:login' %}">{% trans 'Login' %}</a></p>
+</div>
+{% else %}
+<div>
+  <h3>
+    {% trans 'You are logged in' %}
+  </h3>
+</div>
+<div>
+  <p><a href="{% url 'user_account:logout' %}">{% trans 'Logout' %}</a></p>
+</div>
+{% endif %}
+<div>
+  <p><a href="{% url 'shop:index' %}">{% trans 'Shop' %}</a></p>
+</div>
+
+
+{% endblock %}

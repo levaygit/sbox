@@ -1,0 +1,23 @@
+{% extends 'shop/base.html' %}
+{% load i18n %}
+
+{% block title %}
+  {% trans 'Promotion' %} #{{ promotion.pk }}
+{% endblock %}
+
+{% block body %}
+  <h1>{% trans 'Promotion' %} <strong>{{ promotion.name }}</strong></h1>
+  <div>
+    <div>{% trans 'Description' %}: <em>{{ promotion.description }}</em></div>
+    <div>{{ promotion.start }} - {{ promotion.end }}</div>
+    {% for product in promotion.products.all %}
+    <a href="{% url 'shop:product_details' pk=product.pk %}">{{ product.name }}</a>
+    {% endfor %}
+  </div>
+{% endblock %}
+
+{% block footer %}
+  <div>
+    <a href="{% url 'shop:products_list' %}">{% trans 'Back to products list' %}</a>
+  </div>
+{% endblock %}

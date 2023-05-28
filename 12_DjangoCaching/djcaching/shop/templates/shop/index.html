@@ -1,0 +1,21 @@
+{% extends 'shop/base.html' %}
+{% load i18n %}
+
+{% block title %}
+
+{% trans 'Shop Index' %}
+
+{% endblock %}
+
+
+{% block header %}
+
+
+{% endblock %}
+
+
+{% block body %}
+
+<p><a href="{% url 'shop:products_list' %}">{% trans 'Products list' %}</a></p>
+
+{% endblock %}

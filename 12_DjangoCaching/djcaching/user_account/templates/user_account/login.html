@@ -1,0 +1,30 @@
+{% extends 'user_account/base.html' %}
+{% load i18n %}
+
+
+{% block title %}
+
+{% trans 'Login' %}
+
+{% endblock %}
+
+
+{% block body %}
+
+<div>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{% trans 'Login' %}</button>
+  </form>
+</div>
+<div>
+  <p><a href="{% url 'user_account:register' %}">{% trans 'Register' %}</a></p>
+</div>
+{% endblock %}
+
+{% block footer %}
+<div>
+  <p><a href="{% url 'shop:index' %}">{% trans 'Shop' %}</a></p>
+</div>
+{% endblock %}

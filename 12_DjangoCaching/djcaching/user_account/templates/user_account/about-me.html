@@ -1,0 +1,53 @@
+{% extends 'user_account/base.html' %}
+{% load i18n %}
+{% load cache %}
+
+
+{% block title %}
+  {% trans 'About me' %}
+{% endblock %}
+
+
+{% block body %}
+  <h1>{% trans 'User info' %}</h1>
+  {% if user.is_authenticated %}
+    <h2>{% trans 'Detail' %}</h2>
+    <p>{% trans 'Username' %}: {{ object.username }}</p>
+    <p>{% trans 'First name' %}: {% firstof object.first_name '---' %}</p>
+    <p>{% trans 'Last name' %}: {% firstof object.last_name '---' %}</p>
+    <p>{% trans 'Email' %}: {% firstof object.email '---' %}</p>
+    <p>{% trans 'Balance' %}: {{ object.profile.balance }}</p>
+<hr>
+<div>
+  {% cache 120 orders %}
+  {% if orders %}
+  <h5>{% trans 'Orders' %}:</h5>
+  {% for order in orders %}
+  <p>{{ order.created_at }}:
+    <a href="{% url 'shop:order_details' pk=order.pk %}">#{{ order.pk }}</a>
+    {% trans 'Delivery address' %}: {{ order.delivery_address }}  </p>
+  {% endfor %}
+  {% else %}
+  <h5>{% trans 'No orders yet' %}</h5>
+  {% endif %}
+  {% endcache %}
+</div>
+<hr>
+<div>
+  {% if promotions %}
+  <h5>{% trans 'Promotions' %}:</h5>
+  {% for promotion in promotions %}
+  <p>
+     <a href="{% url 'shop:promotion_details' pk=promotion.pk %}">{{ promotion.name }}:</a>
+    {{ promotion.start }} - {{ promotion.end }} </p>
+  {% endfor %}
+  {% else %}
+  <h5>{% trans 'No promotions yet' %}</h5>
+  {% endif %}
+</div>
+
+  {% else %}
+    <h2>{% trans 'User is anonymous' %}</h2>
+  {% endif %}
+{% endblock %}
+
